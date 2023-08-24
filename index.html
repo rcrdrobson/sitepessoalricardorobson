@@ -6,6 +6,44 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+		<script type="text/javascript">
+			function sendMessage() {
+				var name = $("#name").val();
+				var contact = $("#contact").val();
+				var message = $("#message").val();
+	
+				var messageArray = {
+					'name': name,
+					'contact': contact,
+					'message': message
+				};
+	
+				$.ajax({
+						url: "sendMail.php",
+						type: "post",
+						async: true,
+						data: messageArray,
+						cache: false
+					})
+					.done(function(data) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Mensagem enviada!',
+							text: 'Aguarde e entrarei em contato!'
+						});
+					})
+					.fail(function() {
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops... Algo deu errado!',
+							text: 'Sua mensagem não foi enviada, tente novamente!'
+						});
+					});
+			}
+		</script>
 	</head>
 	<body class="is-preload">
 		<!-- Header -->
@@ -70,9 +108,9 @@
 							<div class="col-8 col-12-small">
 								<form method="post" action="#">
 									<div class="row gtr-uniform gtr-50">
-										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
-										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
-										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
+										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Seu nome" /></div>
+										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="contact" placeholder="Contato (email ou telefone)" /></div>
+										<div class="col-12"><textarea name="message" id="message" placeholder="Sua mensagem" rows="4"></textarea></div>
 									</div>
 								</form>
 								<ul class="actions">
